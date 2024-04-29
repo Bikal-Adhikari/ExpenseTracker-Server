@@ -21,7 +21,7 @@ app.use(cors());
 
 // Routers
 import userRouter from "./src/routers/users.js";
-import transactionRouter from "./src/routers/transactions.js";
+import transactionRouter from "./src/routers/transcation.js";
 
 // User
 app.use("/api/v1/users", userRouter);

@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
         })
       : res.json({
           status: "error",
-          message: "Unabel to process your request try again later",
+          message: "Unable to process your request try again later",
         });
   } catch (error) {
     res.status(500).json({
