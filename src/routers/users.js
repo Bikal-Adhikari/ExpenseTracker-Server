@@ -1,6 +1,7 @@
 import express from "express";
 import { insertUser } from "../models/user/UserModel.js";
 import { comparePassword, hasPassword } from "../utils/bcryptjs.js";
+import { getUserByEmail } from "../models/user/UserModel.js";
 const router = express.Router();
 
 // router = {
@@ -58,18 +59,20 @@ router.post("/login", async (req, res) => {
       //compare password
 
       const isMatched = comparePassword(password, user.password);
-
+      user.password = undefined;
       if (isMatched) {
         //authorized
         return res.json({
           status: "success",
           message: "Login sucessfully",
+          user,
         });
       }
     }
     res.json({
       status: "error",
       message: "Invalid credentials",
+      user,
     });
   } catch (error) {
     let code = 500;
