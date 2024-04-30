@@ -4,7 +4,10 @@ POST http://localhost:8000/api/v1/users
 Content-Type: application/json
 
 {
-    "name": "John Doe"
+    "name": "John Doe",
+    "email": "john.doe",
+    "phone":"1233",
+    "password": "mysecret"
 }
 
 

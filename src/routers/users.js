@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
     console.log(error);
   }
 });
+
 router.post("/", async (req, res) => {
   try {
     const result = await insertUser(req.body);
@@ -32,7 +33,13 @@ router.post("/", async (req, res) => {
           message: "Unable to process your request try again later",
         });
   } catch (error) {
-    res.status(500).json({
+    let code = 500;
+    if (error.message.includes("E11000 duplicate key error")) {
+      code = 200;
+      error.message =
+        "There is already another account associated to this email. Use different email to signup.";
+    }
+    res.status(code).json({
       status: "error",
       message: error.message,
     });
