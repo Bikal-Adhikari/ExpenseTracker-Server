@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "server error",
-      message: `Server Error ${error}`,
+      message: `Server Error ${error.message}`,
     });
   }
 });
@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
     result?._id
       ? res.json({
           status: "success",
-          message: "todo post",
+          message: "New transactions added",
         })
       : res.json({
           status: "error",
