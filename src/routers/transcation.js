@@ -1,5 +1,8 @@
 import express from "express";
-import { insertNewTrans } from "../models/transactions/TransactionModel.js";
+import {
+  getTransactionByUserId,
+  insertNewTrans,
+} from "../models/transactions/TransactionModel.js";
 const router = express.Router();
 
 // router = {
@@ -8,14 +11,20 @@ const router = express.Router();
 
 // }
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   try {
+    const { authorization } = req.headers;
+    const trans = (await getTransactionByUserId(authorization)) ?? [];
     res.json({
       status: "success",
-      message: "todo get",
+      message: "Here are the list of the transactions",
+      trans,
     });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      status: "server error",
+      message: `Server Error ${error}`,
+    });
   }
 });
 router.post("/", async (req, res) => {
@@ -34,7 +43,10 @@ router.post("/", async (req, res) => {
           message: " Unable to process your req, try again later",
         });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      status: "server error",
+      message: `Server Error ${error}`,
+    });
   }
 });
 

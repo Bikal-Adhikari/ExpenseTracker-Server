@@ -5,5 +5,5 @@ export const insertNewTrans = (transObj) => {
 };
 
 export const getTransactionByUserId = (userId) => {
-  return TransactionSchema.find({ userId });
+  return !userId ? null : TransactionSchema.find({ userId });
 };
