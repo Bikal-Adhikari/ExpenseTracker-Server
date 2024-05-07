@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteTransactionForUser,
   getTransactionByUserId,
   insertNewTrans,
 } from "../models/transactions/TransactionModel.js";
@@ -41,6 +42,27 @@ router.post("/", async (req, res) => {
       : res.json({
           status: "error",
           message: " Unable to process your req, try again later",
+        });
+  } catch (error) {
+    res.status(500).json({
+      status: "server error",
+      message: `Server Error ${error}`,
+    });
+  }
+});
+
+router.delete("/", async (req, res) => {
+  try {
+    const { authorization } = req.headers;
+    const result = await deleteTransactionForUser(authorization, req.body);
+    result?.deletedCount
+      ? res.json({
+          status: "success",
+          message: "The transactions have been deleted sucessfully",
+        })
+      : res.json({
+          status: "failure",
+          message: "Unable to find the transaction you are trying to delete",
         });
   } catch (error) {
     res.status(500).json({

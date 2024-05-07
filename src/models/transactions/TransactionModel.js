@@ -7,3 +7,9 @@ export const insertNewTrans = (transObj) => {
 export const getTransactionByUserId = (userId) => {
   return !userId ? null : TransactionSchema.find({ userId });
 };
+
+export const deleteTransactionForUser = (userId, idsToDelete) => {
+  return !userId
+    ? null
+    : TransactionSchema.deleteMany({ userId, _id: { $in: idsToDelete } });
+};
